@@ -45,7 +45,7 @@ const Dashboard: React.FC = () => {
     event.preventDefault();
 
     if (!newRepo) {
-      setInputError("Type the owner/repository");
+      setInputError("");
       return;
     }
 
@@ -58,7 +58,7 @@ const Dashboard: React.FC = () => {
       setNewRepo("");
       setInputError("");
     } catch (err) {
-      setInputError("Error on search this repository");
+      setInputError("Repository not found");
     }
   }
 
@@ -71,7 +71,7 @@ const Dashboard: React.FC = () => {
         <input
           value={newRepo}
           onChange={(e) => setNewRepo(e.target.value)}
-          placeholder="Repository not found"
+          placeholder="Type the owner/repository"
         />
         <button type="submit">Pesquisar</button>
       </Form>
