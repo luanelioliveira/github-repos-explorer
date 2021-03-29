@@ -5,7 +5,7 @@ import api from "../../services/api";
 
 import logoImg from "../../assets/logo.svg";
 
-import { Title, Form, Repositories, Error } from "./style";
+import { Title, Form, Error, Repositories, RepositoryInfo } from "./style";
 
 interface Repository {
   full_name: string;
@@ -38,6 +38,12 @@ const Dashboard: React.FC = () => {
       JSON.stringify(repositories)
     );
   }, [repositories]);
+
+  function handleDeleteRepository(fullName: string): void {
+    setRepositories(
+      repositories.filter((repository) => repository.full_name !== fullName),
+    );
+  }
 
   async function handleAddRepository(
     event: FormEvent<HTMLFormElement>
@@ -80,20 +86,28 @@ const Dashboard: React.FC = () => {
 
       <Repositories>
         {repositories.map((repository) => (
-          <Link
-            key={repository.full_name}
-            to={`/repositories/${repository.full_name}`}
-          >
-            <img
-              src={repository.owner.avatar_url}
-              alt={repository.owner.login}
-            />
-            <div>
-              <strong>{repository.full_name}</strong>
-              <p>{repository.description}</p>
-            </div>
-            <FiChevronRight size={20} />
-          </Link>
+          <RepositoryInfo key={repository.full_name}>
+            <button
+              onClick={() => handleDeleteRepository(repository.full_name)}
+              type="button"
+            >
+              Excluir
+            </button>
+            <Link
+              key={repository.full_name}
+              to={`/repositories/${repository.full_name}`}
+            >
+              <img
+                src={repository.owner.avatar_url}
+                alt={repository.owner.login}
+              />
+              <div>
+                <strong>{repository.full_name}</strong>
+                <p>{repository.description}</p>
+              </div>
+              <FiChevronRight size={20} />
+            </Link>
+          </RepositoryInfo>
         ))}
       </Repositories>
     </>
